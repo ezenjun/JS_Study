@@ -12,6 +12,7 @@ class App extends Component {
       mode:'read',
       subject:{title:'Web', sub : 'World Wide Web!'},
       welcome:{title:'Welcome', des:'Hello, React!!'},
+	  selected_content_id:1,
       contents:[
         {id:1, title:'HTML', des:'HTML is for information'},
         {id:2, title:'CSS', des:'CSS is for design'},
@@ -26,16 +27,36 @@ class App extends Component {
       _des = this.state.welcome.des;
     }
     else if(this.state.mode === 'read'){
-      _title = this.state.contents[0].title;
-      _des = this.state.contents[0].des;
+		var i = 0;
+		while(i < this.state.contents.length){
+			var data = this.state.contents[i];
+			if(data.id === this.state.selected_content_id){
+				_title = data.title;
+				_des = data.des;
+				break;
+			}
+			i = i+1;
+		}
     }
     return (
         <div className="App">
             <Subject 
-              title = {this.state.subject.title} 
-              sub = {this.state.subject.sub}>
+				title = {this.state.subject.title} 
+				sub = {this.state.subject.sub}
+				onChangePage={function(){
+					this.setState({
+						mode:'welcome'
+					});
+				}.bind(this)}
+			>
             </Subject>
-            <TOC data={this.state.contents}></TOC>
+            <TOC onChangePage={function(id){
+				this.setState({
+					mode:'read',
+					selected_content_id:Number(id)
+				});
+			}.bind(this)} 
+			data={this.state.contents}></TOC>
             <Content title = {_title} des = {_des}></Content>
         </div>
     );
