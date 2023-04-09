@@ -11,6 +11,12 @@
       "body": "hello",
       "author": "mario",
       "id": 8
+    },
+    {
+      "title": "my new Blog",
+      "body": "hello this is an update to my blogs",
+      "author": "yoshi",
+      "id": 9
     }
   ]
 }
